@@ -42,6 +42,10 @@ spec:
           image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag }}"
           imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
           args:
+          {{- if regexMatch "\\/canonical\\/" .Values.controller.image.repository }}
+            - --args
+            - rawfile
+          {{- end }}
             - csi-driver
             - --disable-metrics
           env:

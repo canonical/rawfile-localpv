@@ -18,6 +18,8 @@ controller:
 
 node:
   <<: *defaults
+  storage:
+    path: /var/csi/rawfile
   metrics:
     enabled: false
 
