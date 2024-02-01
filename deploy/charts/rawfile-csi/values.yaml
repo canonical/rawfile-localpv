@@ -15,6 +15,9 @@ defaults: &defaults
 
 controller:
   <<: *defaults
+  csi_driver_args:
+    - csi-driver
+    - --disable-metrics
 
 node:
   <<: *defaults
