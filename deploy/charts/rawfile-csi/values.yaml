@@ -21,6 +21,11 @@ node:
   metrics:
     enabled: false
 
+storageClass:
+  enabled: false
+  name: "csi-rawfile-default"
+  isDefault: true
+
 imagePullSecrets: []
 serviceMonitor:
   enabled: true
