@@ -1,8 +1,0 @@
-grpcio-tools
-grpcio
-click
-pyyaml
-pykube-ng
-munch
-prometheus_client
-#https://github.com/kdave/btrfs-progs/archive/refs/tags/v6.3.2.tar.gz#egg=btrfsutil&subdirectory=libbtrfsutil/python
