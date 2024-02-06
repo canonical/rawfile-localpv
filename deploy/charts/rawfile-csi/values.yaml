@@ -25,6 +25,8 @@ storageClass:
   enabled: false
   name: "csi-rawfile-default"
   isDefault: true
+  reclaimPolicy: Delete
+  volumeBindingMode: WaitForFirstConsumer
 
 imagePullSecrets: []
 serviceMonitor:
