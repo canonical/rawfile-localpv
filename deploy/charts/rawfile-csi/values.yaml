@@ -19,6 +19,21 @@ controller:
     - csi-driver
     - --disable-metrics
 
+csiImages:
+  repository: registry.k8s.io/sig-storage
+  csiProvisioner:
+    image: csi-provisioner
+    tag: v5.0.1
+  csiResizer:
+    image: csi-resizer
+    tag: v1.11.1
+  csiSnapshotter:
+    image: csi-snapshotter
+    tag: v8.0.1
+  nodeDriverRegistrar:
+    image: csi-node-driver-registrar
+    tag: v2.10.1
+
 node:
   <<: *defaults
   storage:

@@ -69,7 +69,7 @@ spec:
           resources:
             {{- toYaml .Values.controller.resources | nindent 12 }}
         - name: external-resizer
-          image: k8s.gcr.io/sig-storage/csi-resizer:v1.7.0
+          image: {{ .Values.csiImages.repository }}/{{ .Values.csiImages.csiResizer.image }}:{{ .Values.csiImages.csiResizer.tag }}
           imagePullPolicy: IfNotPresent
           args:
             - "--csi-address=$(ADDRESS)"
