@@ -91,7 +91,7 @@ spec:
           resources:
             {{- toYaml .Values.node.resources | nindent 12 }}
         - name: node-driver-registrar
-          image: {{ .Values.csiImages.repository }}/{{ .Values.csiImages.nodeDriverRegistrar.image }}:{{ .Values.csiImages.nodeDriverRegistrar.tag }}
+          image: {{ .Values.images.nodeDriverRegistrar }}
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -124,7 +124,7 @@ spec:
               cpu: 10m
               memory: 100Mi
         - name: external-provisioner
-          image: {{ .Values.csiImages.repository }}/{{ .Values.csiImages.csiProvisioner.image }}:{{ .Values.csiImages.csiProvisioner.tag }}
+          image: {{ .Values.images.csiProvisioner }}
           imagePullPolicy: IfNotPresent
           args:
             - "--csi-address=$(ADDRESS)"
@@ -154,7 +154,7 @@ spec:
             - name: socket-dir
               mountPath: /csi
         - name: external-snapshotter
-          image: {{ .Values.csiImages.repository }}/{{ .Values.csiImages.csiSnapshotter.image }}:{{ .Values.csiImages.csiSnapshotter.tag }}
+          image: {{ .Values.images.csiSnapshotter }}
           imagePullPolicy: IfNotPresent
           args:
             - "--csi-address=$(ADDRESS)"
