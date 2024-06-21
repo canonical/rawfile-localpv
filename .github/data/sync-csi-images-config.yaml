@@ -1,0 +1,6 @@
+k8s.gcr.io/sig-storage:
+  images-by-semver:
+    csi-node-driver-registrar: "= v2.10.0"
+    csi-provisioner: "= v3.4.1"
+    csi-resizer: "= v1.7.0"
+    csi-snapshotter: "= v6.2.1"
