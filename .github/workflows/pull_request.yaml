@@ -30,3 +30,4 @@ jobs:
     with:
       rock-metas: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas }}
       dry-run: ${{ github.event_name != 'push' }}
+      
