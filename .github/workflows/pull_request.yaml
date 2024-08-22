@@ -14,10 +14,27 @@ jobs:
       trivy-image-config: "trivy.yaml"
       multiarch-awareness: true
       cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
+      arch-skipping-maximize-build-space: '["arm64"]'
+      platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
+  run-tests:
+    uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
+    needs: [build-and-push-arch-specifics]
+    secrets: inherit
+    with:
+      rock-metas: ${{ needs.build-and-push-arch-specifics.outputs.rock-metas }}
+  scan-images:
+    uses: canonical/k8s-workflows/.github/workflows/scan_images.yaml@main
+    needs: [build-and-push-arch-specifics]
+    secrets: inherit
+    with:
+      upload-result: ${{ github.event_name == 'push' }}
+      images: ${{ needs.build-and-push-arch-specifics.outputs.images }}
+      trivy-image-config: ./trivy.yaml
   build-and-push-multiarch-manifest:
     name: Combine Rocks and Push Multiarch Manifest
     uses: canonical/k8s-workflows/.github/workflows/assemble_multiarch_image.yaml@main
     needs: [build-and-push-arch-specifics]
+    if: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas != '[]' }}
     with:
       rock-metas: ${{ needs.build-and-push-arch-specifics.outputs.rock-metas }}
       dry-run: ${{ github.event_name != 'push' }}
