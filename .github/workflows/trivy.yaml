@@ -79,7 +79,7 @@ jobs:
         id: read-tag
         with:
           script: |
-            const { data: packages } = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+            const { data: packages } = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
               package_type,
               package_name,
               org,
