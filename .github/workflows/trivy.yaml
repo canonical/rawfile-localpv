@@ -70,27 +70,20 @@ jobs:
     permissions:
       security-events: write
     steps:
-#      - name: Checking out repo
-#        uses: actions/checkout@v4
-#        with:
-#          ref: ${{ matrix.branch }}
-#          fetch-depth: 0
 
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
       - uses: actions/github-script@v7
         id: read-tag
         with:
           script: |
-            const { data: packages } = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-              package_type,
-              package_name,
-              org,
-              per_page,
-            });
+            console.log(github.rest)
+
+#            const { data: packages } = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+#              package_type,
+#              package_name,
+#              org,
+#              per_page,
+#            });
+
 #            let container_tag=packages[0].metadata.container.tags[0]
 #            return container_tag
           result-encoding: string
