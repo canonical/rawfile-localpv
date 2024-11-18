@@ -89,21 +89,17 @@ jobs:
             let container_tag = packages[0].metadata.container.tags[0]
             return container_tag
           result-encoding: string
-      - name: Get commit sha
-        run: |
-          echo "ghcr.io/${{ github.repository }}:${{steps.read-tag.outputs.result}}"
-
-#      - name: Run Trivy vulnerability scanner in image mode
-#        uses: aquasecurity/trivy-action@0.28.0
-#        with:
-#          scan-type: "image"
-#          image-ref:
-#          ignore-unfixed: true
-#          format: "sarif"
-#          output: "output.sarif"
-#          severity: "MEDIUM,HIGH,CRITICAL"
-#        env:
-#          TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db"
+      - name: Run Trivy vulnerability scanner in image mode
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: "image"
+          image-ref: "ghcr.io/${{ github.repository }}:${{steps.read-tag.outputs.result}}"
+          ignore-unfixed: true
+          format: "sarif"
+          output: "output.sarif"
+          severity: "MEDIUM,HIGH,CRITICAL"
+        env:
+          TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db"
 #      - name: Get commit sha
 #        run: |
 #          SHA="$(git rev-parse HEAD)"
