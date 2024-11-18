@@ -75,7 +75,7 @@ jobs:
         id: read-tag
         with:
           script: |
-            const { data: packages } = await github.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
+            const response = await github.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
               package_type: package_type,
               package_name: package_name,
               org: org,
@@ -83,7 +83,7 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28'
               }
             })
-            let container_tag=packages[0].metadata.container.tags[0]
+            let container_tag =response.data[0].metadata.container.tags[0]
             return container_tag
           result-encoding: string
       - name: Get commit sha
