@@ -76,6 +76,8 @@ jobs:
         with:
           script: |
             let package_type = "container"
+            console.log(github.repository)
+
             let org_name= github.repository.split("/")
             let org = org_name[0]
             let package_name = org_name[1]
