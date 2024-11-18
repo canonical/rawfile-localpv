@@ -92,21 +92,15 @@ jobs:
       - name: Run Trivy vulnerability scanner in image mode
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          scan-type: "image"
           image-ref: "ghcr.io/${{ github.repository }}:${{steps.read-tag.outputs.result}}"
           ignore-unfixed: true
-          format: "sarif"
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
           output: "output.sarif"
           severity: "MEDIUM,HIGH,CRITICAL"
         env:
           TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db"
-#      - name: Get commit sha
-#        run: |
-#          SHA="$(git rev-parse HEAD)"
-#          echo "head_sha=$SHA" >> "$GITHUB_ENV"
-#      - name: Upload Trivy scan results to GitHub Security tab
-#        uses: github/codeql-action/upload-sarif@v3
-#        with:
-#          sarif_file: "output.sarif"
-#          sha: ${{ env.head_sha }}
-#          ref: refs/heads/${{ matrix.branch }}
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: "output.sarif"
