@@ -86,7 +86,7 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28'
               }
             })
-            let container_tag =response.data[0].metadata.container.tags[0]
+            let container_tag = packages[0].metadata.container.tags[0]
             return container_tag
           result-encoding: string
       - name: Get commit sha
