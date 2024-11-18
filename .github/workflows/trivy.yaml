@@ -75,17 +75,16 @@ jobs:
         id: read-tag
         with:
           script: |
-            console.log(github.rest)
-
-#            const { data: packages } = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-#              package_type,
-#              package_name,
-#              org,
-#              per_page,
-#            });
-
-#            let container_tag=packages[0].metadata.container.tags[0]
-#            return container_tag
+            const { data: packages } = await github.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
+              package_type: package_type,
+              package_name: package_name,
+              org: org,
+              headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            })
+            let container_tag=packages[0].metadata.container.tags[0]
+            return container_tag
           result-encoding: string
       - name: Get commit sha
         run: |
