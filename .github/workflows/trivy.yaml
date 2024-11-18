@@ -76,9 +76,9 @@ jobs:
         with:
           script: |
             let package_type = "container"
-            console.log(github.repository)
+            console.log(context.repository)
 
-            let org_name= github.repository.split("/")
+            let org_name= context.repository.split("/")
             let org = org_name[0]
             let package_name = org_name[1]
             const { data: packages } = await github.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
