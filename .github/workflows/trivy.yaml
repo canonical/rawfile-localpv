@@ -88,13 +88,9 @@ jobs:
             let container_tag = packages[0].metadata.container.tags[0]
             return packages[0]
 #          result-encoding: string
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            console.log(context)
-#      - name: Get commit sha
-#        run: |
-#          echo "${{ steps.read-tag.outputs.result.metadata.container.tags[0] }}"
+      - name: Get commit sha
+        run: |
+          echo "${{ fromJson(steps.read-tag.outputs.result) }}"
 
 #      - name: Checking out repo
 #        uses: actions/checkout@v4
