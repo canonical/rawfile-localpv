@@ -89,7 +89,6 @@ jobs:
             return packages[0]
 #          result-encoding: string
       - uses: actions/github-script@v7
-        id: read-tag
         with:
           script: |
             console.log(steps.read-tag.outputs.result)
