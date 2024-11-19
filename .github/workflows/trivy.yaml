@@ -84,30 +84,22 @@ jobs:
               headers: {
                 'X-GitHub-Api-Version': '2022-11-28'
               }
-            })
-            packages[0].container_sha = packages[0].metadata.container.tags[0].split("-")[0]
-            return packages[0]
-#          result-encoding: string
+            })            
+            return {
+                  git_tag: packages[0].metadata.container.tags[0].split("-")[0],
+                  container_tag: packages[0].metadata.container.tags[0]
+            }
 
-      #      - uses: actions/github-script@v7
-#        with:
-#          script: |
-#            console.log(context)
-#            console.log(context.container_tag)
-#            console.log(context.context.container_sha)
-#            console.log(env.context.container_sha)
-##          result-encoding: string
       - name: output
         run: |
-          echo "${{ fromJson(steps.read-tag.outputs.result).name }}"
-          echo "${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
-          echo "${{ fromJson(steps.read-tag.outputs.result).container_sha }}"
+          echo "${{ fromJson(steps.read-tag.outputs.result).container_tag }}"
+          echo "${{ fromJson(steps.read-tag.outputs.result).git_tag }}"
 
 
       - name: Checking out repo
         uses: actions/checkout@v4
         with:
-          ref: "rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).container_sha }}" #todo checkout to container sha
+          ref: "rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).git_tag }}"
           fetch-depth: 0
       - name: Get commit sha
         run: |
@@ -117,7 +109,7 @@ jobs:
       - name: Run Trivy vulnerability scanner in image mode
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: "ghcr.io/${{ github.repository }}:${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
+          image-ref: "ghcr.io/${{ github.repository }}:${{ fromJson(steps.read-tag.outputs.result).container_tag }}"
           ignore-unfixed: true
           format: 'template'
           template: '@/contrib/sarif.tpl'
@@ -129,5 +121,5 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "output.sarif"
-          ref: refs/tags/rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).container_sha }}
+          ref: refs/tags/rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).git_tag }}
           sha: ${{ env.head_sha }}
