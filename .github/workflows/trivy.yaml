@@ -129,5 +129,5 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "output.sarif"
-          ref: refs/tags/${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}
+          ref: refs/tags/${{ fromJson(steps.read-tag.outputs.result).container_sha }}
           sha: ${{ env.head_sha }}
