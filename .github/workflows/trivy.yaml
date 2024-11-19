@@ -87,7 +87,7 @@ jobs:
             })
             let container_tag = packages[0].metadata.container.tags[0]
             context.container_tag = packages[0].metadata.container.tags[0]
-            context.container_sha = packages[0].name.split(":")[1]
+            packages[0].container_sha = packages[0].name.split(":")[1]
             return packages[0]
 #      - uses: actions/github-script@v7
 #        with:
@@ -101,6 +101,7 @@ jobs:
         run: |
           echo "${{ fromJson(steps.read-tag.outputs.result).name }}"
           echo "${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
+          echo "${{ fromJson(steps.read-tag.outputs.result).container_sha }}"
 
 #      - name: Checking out repo
 #        uses: actions/checkout@v4
