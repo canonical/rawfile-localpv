@@ -97,11 +97,16 @@ jobs:
 #            console.log(context.context.container_sha)
 #            console.log(env.context.container_sha)
 ##          result-encoding: string
-      - name: Get commit sha
+      - name: output
         run: |
           echo "${{ fromJson(steps.read-tag.outputs.result).name }}"
           echo "${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
           echo "${{ fromJson(steps.read-tag.outputs.result).container_sha }}"
+      - name: Get commit sha
+        run: |
+          SHA="$(git rev-parse HEAD)"
+          echo "head_sha=$SHA" >> "$GITHUB_ENV"
+        
 
       - name: Checking out repo
         uses: actions/checkout@v4
@@ -124,3 +129,4 @@ jobs:
         with:
           sarif_file: "output.sarif"
           ref: refs/tags/${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}
+          sha: ${{ env.head_sha }}
