@@ -1,5 +1,7 @@
 name: cla-check
-on: [pull_request_target]
+on:
+  schedule:
+    - cron: "0 0 * * *" # todo revert
 
 jobs:
   cla-check:
