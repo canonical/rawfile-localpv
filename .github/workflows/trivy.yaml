@@ -100,6 +100,7 @@ jobs:
       - name: Get commit sha
         run: |
           echo "${{ fromJson(steps.read-tag.outputs.result).name }}"
+          echo "${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
 
 #      - name: Checking out repo
 #        uses: actions/checkout@v4
