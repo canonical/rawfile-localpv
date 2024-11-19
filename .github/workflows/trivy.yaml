@@ -70,7 +70,6 @@ jobs:
     permissions:
       security-events: write
     steps:
-
       - uses: actions/github-script@v7
         id: read-tag
         with:
@@ -87,20 +86,32 @@ jobs:
               }
             })
             let container_tag = packages[0].metadata.container.tags[0]
-            return container_tag
+            return packages[0]
           result-encoding: string
-      - name: Run Trivy vulnerability scanner in image mode
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: "ghcr.io/${{ github.repository }}:${{steps.read-tag.outputs.result}}"
-          ignore-unfixed: true
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: "output.sarif"
-          severity: "MEDIUM,HIGH,CRITICAL"
-        env:
-          TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db"
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: "output.sarif"
+      - name: Get commit sha
+        run: |
+          echo "${{ toJSON(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
+          echo "${{ fromJSON(toJSON(steps.read-tag.outputs.result).metadata.container.tags[0]) }}"
+          echo "${{ toJSON(steps.read-tag.outputs.result).name }}"
+          echo "${{ fromJSON(toJSON(steps.read-tag.outputs.result).name) }}"
+
+#      - name: Checking out repo
+#        uses: actions/checkout@v4
+#        with:
+#          #          ref: ${{ matrix.branch }} #todo checkout to container sha
+#          fetch-depth: 0
+#      - name: Run Trivy vulnerability scanner in image mode
+#        uses: aquasecurity/trivy-action@0.28.0
+#        with:
+#          image-ref: "ghcr.io/${{ github.repository }}:${{steps.read-tag.outputs.result}}"
+#          ignore-unfixed: true
+#          format: 'template'
+#          template: '@/contrib/sarif.tpl'
+#          output: "output.sarif"
+#          severity: "MEDIUM,HIGH,CRITICAL"
+#        env:
+#          TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db"
+#      - name: Upload Trivy scan results to GitHub Security tab
+#        uses: github/codeql-action/upload-sarif@v3
+#        with:
+#          sarif_file: "output.sarif"
