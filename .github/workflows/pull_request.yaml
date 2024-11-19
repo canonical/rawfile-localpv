@@ -1,6 +1,6 @@
 name: Push Multiarch Image
 on:
-#  pull_request: # todo uncomment before merge
+  pull_request:
   push:
     branches:
       - rockcraft
