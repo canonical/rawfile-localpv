@@ -90,7 +90,7 @@ jobs:
           result-encoding: string
       - name: Get commit sha
         run: |
-          echo "${{ toJSON(steps.read-tag.outputs.result) }}"
+          echo "${{ fromJson(toJSON(steps.read-tag.outputs.result)) }}"
 
 #      - name: Checking out repo
 #        uses: actions/checkout@v4
