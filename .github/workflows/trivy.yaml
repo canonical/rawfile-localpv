@@ -107,7 +107,7 @@ jobs:
       - name: Checking out repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ fromJson(steps.read-tag.outputs.result).container_sha }} #todo checkout to container sha
+          ref: "rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).container_sha }}" #todo checkout to container sha
           fetch-depth: 0
       - name: Get commit sha
         run: |
@@ -129,5 +129,5 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "output.sarif"
-          ref: refs/tags/${{ fromJson(steps.read-tag.outputs.result).container_sha }}
+          ref: refs/tags/rawfile-csi-${{ fromJson(steps.read-tag.outputs.result).container_sha }}
           sha: ${{ env.head_sha }}
