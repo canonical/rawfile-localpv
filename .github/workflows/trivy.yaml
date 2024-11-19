@@ -102,17 +102,18 @@ jobs:
           echo "${{ fromJson(steps.read-tag.outputs.result).name }}"
           echo "${{ fromJson(steps.read-tag.outputs.result).metadata.container.tags[0] }}"
           echo "${{ fromJson(steps.read-tag.outputs.result).container_sha }}"
-      - name: Get commit sha
-        run: |
-          SHA="$(git rev-parse HEAD)"
-          echo "head_sha=$SHA" >> "$GITHUB_ENV"
-        
+
 
       - name: Checking out repo
         uses: actions/checkout@v4
         with:
           ref: ${{ fromJson(steps.read-tag.outputs.result).container_sha }} #todo checkout to container sha
-#          fetch-depth: 0
+          fetch-depth: 0
+      - name: Get commit sha
+        run: |
+          SHA="$(git rev-parse HEAD)"
+          echo "head_sha=$SHA" >> "$GITHUB_ENV"
+
       - name: Run Trivy vulnerability scanner in image mode
         uses: aquasecurity/trivy-action@0.28.0
         with:
