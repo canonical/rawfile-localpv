@@ -85,9 +85,11 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28'
               }
             })
-            packages[0].container_sha = packages[0].name.split(":")[1]
+            packages[0].container_sha = packages[0].metadata.container.tags[0].split("-")[0]
             return packages[0]
-#      - uses: actions/github-script@v7
+#          result-encoding: string
+
+      #      - uses: actions/github-script@v7
 #        with:
 #          script: |
 #            console.log(context)
