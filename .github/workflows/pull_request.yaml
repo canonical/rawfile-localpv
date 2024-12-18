@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - rockcraft
+      - main
 
 jobs:
   build-and-push-arch-specifics:
