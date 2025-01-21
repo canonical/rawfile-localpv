@@ -22,6 +22,21 @@ jobs:
       - name: Checking out repo
         uses: actions/checkout@v4
 
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          # pylint and flake8 are required by TICSQServer.
+          pip install pylint flake8
+
+          sudo apt install libbtrfsutil-dev
+          pip wheel -w wheels/ "https://github.com/kdave/btrfs-progs/archive/refs/tags/v6.3.2.tar.gz#egg=btrfsutil&subdirectory=libbtrfsutil/python"
+          pip install wheels/*
+          pip install -r requirements.txt
+
       - name: Install Go
         uses: actions/setup-go@v5
         with:
@@ -32,6 +47,9 @@ jobs:
           export TICSAUTHTOKEN=${{ secrets.TICSAUTHTOKEN }}
 
           set -x
+
+          # We don't have any unit tests for this project, but TICS expects this folder to exist.
+          mkdir -p cover
 
           # Install the TICS and staticcheck
           go install honnef.co/go/tools/cmd/staticcheck@v0.5.1
