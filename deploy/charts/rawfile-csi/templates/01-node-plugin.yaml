@@ -34,6 +34,10 @@ spec:
     spec:
       serviceAccount: {{ include "rawfile-csi.fullname" . }}-driver
       priorityClassName: system-node-critical
+      {{- if .Values.node.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.node.nodeSelector | nindent 8 }}
+      {{- end }}
       tolerations:
         - operator: "Exists"
       volumes:
@@ -43,7 +47,7 @@ spec:
             type: Directory
         - name: socket-dir
           hostPath:
-            path: /var/lib/kubelet/plugins/rawfile-csi
+            path: /var/lib/kubelet/plugins/{{ include "rawfile-csi.fullname" . }}
             type: DirectoryOrCreate
         - name: mountpoint-dir
           hostPath:
@@ -101,7 +105,7 @@ spec:
             - name: ADDRESS
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
-              value: /var/lib/kubelet/plugins/rawfile-csi/csi.sock
+              value: /var/lib/kubelet/plugins/{{ include "rawfile-csi.fullname" . }}/csi.sock
           ports:
             - containerPort: 9809
               name: healthz
