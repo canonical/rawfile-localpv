@@ -31,6 +31,8 @@ node:
     path: /var/csi/rawfile
   metrics:
     enabled: false
+  # nodeSelector:
+  #   - storagePool: "pool1"
 
 storageClass:
   enabled: false
