@@ -4,35 +4,35 @@
 #
 #    pip-compile
 #
-certifi==2023.5.7
+certifi==2024.12.14
     # via requests
-charset-normalizer==3.1.0
+charset-normalizer==3.4.0
     # via requests
-click==8.1.3
+click==8.1.7
     # via -r requirements.in
-grpcio==1.56.0
+grpcio==1.56.2
     # via
     #   -r requirements.in
     #   grpcio-tools
-grpcio-tools==1.56.0
+grpcio-tools==1.56.2
     # via -r requirements.in
-idna==3.4
+idna==3.10
     # via requests
 munch==4.0.0
     # via -r requirements.in
-prometheus-client==0.17.0
+prometheus-client==0.21.1
     # via -r requirements.in
-protobuf==4.23.3
+protobuf==4.25.5
     # via grpcio-tools
 pykube-ng==23.6.0
     # via -r requirements.in
-pyyaml==6.0
+pyyaml==6.0.2
     # via
     #   -r requirements.in
     #   pykube-ng
-requests==2.31.0
+requests==2.32.3
     # via pykube-ng
-urllib3==2.0.3
+urllib3==2.2.3
     # via
     #   pykube-ng
     #   requests

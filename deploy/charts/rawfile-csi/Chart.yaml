@@ -3,4 +3,4 @@ name: rawfile-csi
 description: RawFile Driver Container Storage Interface
 type: application
 version: 0.9.0
-appVersion: 0.8.0
+appVersion: 0.8.1

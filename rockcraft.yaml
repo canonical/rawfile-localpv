@@ -3,13 +3,14 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.0"
+version: "0.8.1"
 license: Apache-2.0
 
 base: bare
 build-base: ubuntu@22.04
 platforms:
   amd64:
+  arm64:
 
 services:
   rawfile:

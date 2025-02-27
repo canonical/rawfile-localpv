@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - rockcraft
+      - main
     paths:
       - "deploy/charts/**"
 jobs:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: rockcraft
+          ref: main
           fetch-depth: 0
 
       - name: Configure Git
