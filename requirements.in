@@ -1,8 +1,8 @@
-grpcio-tools
-grpcio
-click
-pyyaml
-pykube-ng
-munch
-prometheus_client
+grpcio-tools==1.70.0
+grpcio==1.70.0
+click==8.1.8
+pyyaml==6.0.2
+pykube-ng==23.6.0
+munch==4.0.0
+prometheus_client==0.21.1
 #https://github.com/kdave/btrfs-progs/archive/refs/tags/v6.3.2.tar.gz#egg=btrfsutil&subdirectory=libbtrfsutil/python
