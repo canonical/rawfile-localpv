@@ -49,7 +49,6 @@ parts:
     stage-packages:
       - e2fsprogs
       - btrfs-progs
-      - libbtrfsutil-dev
       - libbtrfsutil1
       - xfsprogs
       - python3-venv
@@ -57,9 +56,6 @@ parts:
       - mount
       - coreutils
       - util-linux
-      - build-essential
-      - bash
-      - python3-tox
   rawfile:
     after: [rawfile-deps]
     plugin: dump
