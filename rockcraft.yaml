@@ -6,7 +6,7 @@ description: Kubernetes LocalPVs on Steroids
 version: "0.8.1"
 license: Apache-2.0
 
-base: bare
+base: ubuntu@24.04
 build-base: ubuntu@24.04
 platforms:
   amd64:
@@ -59,6 +59,7 @@ parts:
       - util-linux
       - build-essential
       - bash
+      - python3-tox
   rawfile:
     after: [rawfile-deps]
     plugin: dump
