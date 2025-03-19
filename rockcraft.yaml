@@ -6,8 +6,8 @@ description: Kubernetes LocalPVs on Steroids
 version: "0.8.1"
 license: Apache-2.0
 
-base: ubuntu@24.04
-build-base: ubuntu@24.04
+base: bare
+build-base: ubuntu@22.04
 platforms:
   amd64:
   arm64:
