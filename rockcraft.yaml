@@ -58,6 +58,7 @@ parts:
       - coreutils
       - util-linux
       - build-essential
+      - bash
   rawfile:
     after: [rawfile-deps]
     plugin: dump
