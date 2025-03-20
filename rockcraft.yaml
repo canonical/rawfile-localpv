@@ -47,7 +47,7 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
-      - libc6
+      - linux-libc-dev
       - e2fsprogs
       - btrfs-progs
       - libbtrfsutil1
