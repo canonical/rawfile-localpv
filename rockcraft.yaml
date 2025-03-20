@@ -48,7 +48,7 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
-      - libc6-dev
+      - libc6
       - e2fsprogs
       - btrfs-progs
       - libbtrfsutil1
@@ -60,7 +60,7 @@ parts:
       - util-linux
     override-build: |
       mkdir $CRAFT_PART_INSTALL/lib64
-      ln -s $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 $CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2
+      ln -s /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 $CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2
   rawfile:
     after: [rawfile-deps]
     plugin: dump
