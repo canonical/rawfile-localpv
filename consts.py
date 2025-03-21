@@ -1,7 +1,7 @@
 import os
 
 PROVISIONER_NAME = os.getenv("PROVISIONER_NAME", "rawfile.csi.openebs.io")
-PROVISIONER_VERSION = "0.8.1"
+PROVISIONER_VERSION = "0.8.2"
 DATA_DIR = "/data"
 CONFIG = {}
 RESOURCE_EXHAUSTED_EXIT_CODE = 101

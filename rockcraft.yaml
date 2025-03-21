@@ -3,11 +3,11 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.1"
+version: "0.8.2"
 license: Apache-2.0
 
 base: bare
-build-base: ubuntu@22.04
+build-base: ubuntu@24.04
 platforms:
   amd64:
   arm64:
@@ -18,8 +18,8 @@ services:
     command: python3 /app/rawfile.py [ csi-driver ]
     startup: enabled
     environment:
-      PYTHONUNBUFFERED: '1'
-    working-dir: '/app'
+      PYTHONUNBUFFERED: "1"
+    working-dir: "/app"
 
 parts:
   btrfsutil:
@@ -47,6 +47,7 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
+      - libc6
       - e2fsprogs
       - btrfs-progs
       - libbtrfsutil1
@@ -56,6 +57,9 @@ parts:
       - mount
       - coreutils
       - util-linux
+    override-build: |
+      mkdir $CRAFT_PART_INSTALL/lib64
+      ln -s /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 $CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2
   rawfile:
     after: [rawfile-deps]
     plugin: dump
@@ -65,4 +69,4 @@ parts:
       orchestrator: app/orchestrator
       protos: app/protos
       templates: app/templates
-      '*.py': app/
+      "*.py": app/
