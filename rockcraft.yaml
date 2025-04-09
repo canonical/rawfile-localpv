@@ -47,6 +47,7 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
+      - base-files
       - libc6
       - e2fsprogs
       - btrfs-progs
@@ -59,16 +60,6 @@ parts:
       - util-linux
     override-build: |
       ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
-      if [ $CRAFT_ARCH_BUILD_FOR = "amd64" ]; then
-        mkdir -p $CRAFT_PART_INSTALL/lib64
-        ln -sf /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 "$CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2"
-      else
-        mkdir -p $CRAFT_PART_INSTALL/lib/aarch64-linx-gnu
-        # HACK: gets the aarch64 linker into the bare based image
-        # Copies the linker from the rockcraft build container to the install directory
-        cp /lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 "$CRAFT_PART_INSTALL/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1"
-        ln -sf /lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 "$CRAFT_PART_INSTALL/lib/ld-linux-aarch64.so.1"
-      fi
       craftctl default
   rawfile:
     after: [rawfile-deps]
