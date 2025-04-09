@@ -3,7 +3,7 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.2"
+version: "0.8.2-ck1"
 license: Apache-2.0
 
 base: bare
@@ -58,8 +58,18 @@ parts:
       - coreutils
       - util-linux
     override-build: |
-      mkdir $CRAFT_PART_INSTALL/lib64
-      ln -s /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 $CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2
+      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
+      if [ $CRAFT_ARCH_BUILD_FOR = "amd64" ]; then
+        mkdir -p $CRAFT_PART_INSTALL/lib64
+        ln -sf /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 "$CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2"
+      else
+        mkdir -p $CRAFT_PART_INSTALL/lib/aarch64-linx-gnu
+        # HACK: gets the aarch64 linker into the bare based image
+        # Copies the linker from the rockcraft build container to the install directory
+        cp /lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 "$CRAFT_PART_INSTALL/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1"
+        ln -sf /lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 "$CRAFT_PART_INSTALL/lib/ld-linux-aarch64.so.1"
+      fi
+      craftctl default
   rawfile:
     after: [rawfile-deps]
     plugin: dump
@@ -70,3 +80,9 @@ parts:
       protos: app/protos
       templates: app/templates
       "*.py": app/
+    prime:
+      # exclude repo layer files from the final image
+      - "-.*/"
+      - "-__pycache__/"
+      - "-deploy/"
+      - "-tests/"
