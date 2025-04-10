@@ -59,6 +59,7 @@ parts:
       - coreutils
       - util-linux
     override-build: |
+      mkdir -p $CRAFT_PART_INSTALL/bin/
       ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
       craftctl default
   rawfile:

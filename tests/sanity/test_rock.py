@@ -24,9 +24,7 @@ def test_sanity(image_version):
         "rawfile-localpv", image_version, "amd64"
     )
     image = rock.image
-    args = ["python3", "-c", "import app.consts; print(app.consts.PROVISIONER_VERSION)"]
-    try:
-        process = docker_util.run_in_docker(image, args)
-    except docker_util.subprocess.CalledProcessError as e:
-        assert False, e.stderr or e.stdout
-    assert image_version in process.stdout, process.stderr
+    args = ["pebble", "enter", "-v", "start", "rawfile"]
+    process = docker_util.run_in_docker(image, args, check_exit_code=False)
+    assert process.returncode == 1, "\n".join(process.stderr, process.stdout)
+    assert "Configuration file ~/.kube/config not found" in process.stdout
