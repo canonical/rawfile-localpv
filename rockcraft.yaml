@@ -3,7 +3,7 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.2-ck1"
+version: "0.8.2"
 license: Apache-2.0
 
 base: bare
@@ -59,9 +59,8 @@ parts:
       - coreutils
       - util-linux
     override-build: |
-      mkdir -p $CRAFT_PART_INSTALL/bin/
-      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
       craftctl default
+      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
   rawfile:
     after: [rawfile-deps]
     plugin: dump
