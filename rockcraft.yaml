@@ -58,13 +58,13 @@ parts:
       - mount
       - coreutils
       - util-linux
-    override-build: |
-      craftctl default
-      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
   rawfile:
     after: [rawfile-deps]
     plugin: dump
     source: .
+    override-prime: |
+      craftctl default
+      ln -sf /usr/bin/sh "$CRAFT_PRIME/bin/sh"
     organize:
       csi: app/csi/
       orchestrator: app/orchestrator
