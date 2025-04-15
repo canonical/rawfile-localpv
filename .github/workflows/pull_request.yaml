@@ -10,11 +10,12 @@ jobs:
   dockerfile-wrapper:
     runs-on: ubuntu-latest
     outputs:
-      snap-artifact: ${{ steps.dockerfile-wrapper.outputs.dockerfile-wrapper }}
+      dockerfile-wrapper: ${{ steps.dockerfile-wrapper.outputs.dockerfile-wrapper }}
     steps:
       - name: Get b64 Dockerfile wrapper (Rockcraft workaround)
         id: dockerfile-wrapper
         run: |
+          set -ex
           cat <<EOF > ./dockerfile_wrapper
           ARG IMAGE_TAG
           ARG IMAGE_REPOSITORY
@@ -24,9 +25,8 @@ jobs:
           CMD ["csi-driver"]
           EOF
 
-          b64_dockerfile=$(cat ./dockerfile-wrapper | base64 -w0)
+          b64_dockerfile=$(cat ./dockerfile_wrapper | base64 -w0)
           echo "dockerfile-wrapper=$b64_dockerfile" >> "$GITHUB_OUTPUT"
-
 
   build-and-push-arch-specifics:
     name: Build Rocks and Push Arch Specific Images
