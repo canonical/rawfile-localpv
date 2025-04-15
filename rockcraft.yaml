@@ -47,6 +47,7 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
+      - base-files
       - libc6
       - e2fsprogs
       - btrfs-progs
@@ -58,8 +59,8 @@ parts:
       - coreutils
       - util-linux
     override-build: |
-      mkdir $CRAFT_PART_INSTALL/lib64
-      ln -s /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 $CRAFT_PART_INSTALL/lib64/ld-linux-x86-64.so.2
+      craftctl default
+      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
   rawfile:
     after: [rawfile-deps]
     plugin: dump
@@ -70,3 +71,9 @@ parts:
       protos: app/protos
       templates: app/templates
       "*.py": app/
+    prime:
+      # exclude repo layer files from the final image
+      - "-.*/"
+      - "-__pycache__/"
+      - "-deploy/"
+      - "-tests/"
