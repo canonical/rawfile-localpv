@@ -36,7 +36,7 @@ jobs:
       owner: ${{ github.repository_owner }}
       trivy-image-config: "trivy.yaml"
       multiarch-awareness: true
-      cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
+      cache-action: skip
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
       dockerfile-wrapper-b64: ${{ needs.dockerfile-wrapper.outputs.dockerfile-wrapper }}
