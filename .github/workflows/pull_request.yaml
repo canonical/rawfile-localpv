@@ -40,7 +40,7 @@ jobs:
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
       dockerfile-wrapper-b64: ${{ needs.dockerfile-wrapper.outputs.dockerfile-wrapper }}
-      tmate-on-failure: true
+      tmate-on-failure: false
 
   run-tests:
     uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
