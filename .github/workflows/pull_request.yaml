@@ -39,6 +39,7 @@ jobs:
       cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
       platform-labels: '{"arm64": ["self-hosted-linux-arm64-jammy-large"]}'
       dockerfile-wrapper-b64: ${{ needs.dockerfile-wrapper.outputs.dockerfile-wrapper }}
+      tmate-on-failure: true
 
   run-tests:
     uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
