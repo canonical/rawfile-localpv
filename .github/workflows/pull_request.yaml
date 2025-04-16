@@ -37,7 +37,8 @@ jobs:
       trivy-image-config: "trivy.yaml"
       multiarch-awareness: true
       cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
-      platform-labels: '{"arm64": ["self-hosted-linux-arm64-jammy-large"]}'
+      # arch-skipping-maximize-build-space: '["arm64"]'
+      platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
       dockerfile-wrapper-b64: ${{ needs.dockerfile-wrapper.outputs.dockerfile-wrapper }}
       tmate-on-failure: true
 
