@@ -7,16 +7,41 @@ on:
   workflow_dispatch:
 
 jobs:
+  dockerfile-wrapper:
+    runs-on: ubuntu-latest
+    outputs:
+      dockerfile-wrapper: ${{ steps.dockerfile-wrapper.outputs.dockerfile-wrapper }}
+    steps:
+      - name: Get b64 Dockerfile wrapper (Rockcraft workaround)
+        id: dockerfile-wrapper
+        run: |
+          set -ex
+          cat <<EOF > ./dockerfile_wrapper
+          ARG IMAGE_TAG
+          ARG IMAGE_REPOSITORY
+          ENV IMAGE_REPOSITORY=\${IMAGE_REPOSITORY}
+          ENV IMAGE_TAG=\${IMAGE_TAG}
+          ENTRYPOINT ["/usr/bin/env", "python3", "/app/rawfile.py"]
+          CMD ["csi-driver"]
+          EOF
+
+          b64_dockerfile=$(cat ./dockerfile_wrapper | base64 -w0)
+          echo "dockerfile-wrapper=$b64_dockerfile" >> "$GITHUB_OUTPUT"
+
   build-and-push-arch-specifics:
     name: Build Rocks and Push Arch Specific Images
-    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@main
+    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@lpetrut/b64_dockerfile
+    needs: [dockerfile-wrapper]
     with:
       owner: ${{ github.repository_owner }}
       trivy-image-config: "trivy.yaml"
       multiarch-awareness: true
-      cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
+      cache-action: skip
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
+      dockerfile-wrapper-b64: ${{ needs.dockerfile-wrapper.outputs.dockerfile-wrapper }}
+      tmate-on-failure: false
+
   run-tests:
     uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
     needs: [build-and-push-arch-specifics]
