@@ -7,7 +7,7 @@ version: "0.8.2"
 license: Apache-2.0
 
 base: bare
-build-base: ubuntu@24.04
+build-base: ubuntu@22.04
 platforms:
   amd64:
   arm64:
@@ -47,8 +47,6 @@ parts:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt
     stage-packages:
-      - base-files
-      - libc6
       - e2fsprogs
       - btrfs-progs
       - libbtrfsutil1
@@ -58,9 +56,6 @@ parts:
       - mount
       - coreutils
       - util-linux
-    override-build: |
-      craftctl default
-      ln -sf /usr/bin/sh "$CRAFT_PART_INSTALL/bin/sh"
   rawfile:
     after: [rawfile-deps]
     plugin: dump
