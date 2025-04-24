@@ -11,7 +11,7 @@ spec:
   volumes:
     - name: data-dir
       hostPath:
-        path: /var/csi/rawfile
+        path: {data_dir_host_path}
         type: DirectoryOrCreate
   nodeSelector: {nodeSelector}
   containers:

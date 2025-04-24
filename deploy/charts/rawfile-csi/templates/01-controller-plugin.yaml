@@ -60,6 +60,8 @@ spec:
             - name: IMAGE_TAG
               value: "{{ .Values.controller.image.tag }}"
           {{- end }}
+            - name: DATA_DIR_HOST_PATH
+              value: {{ .Values.node.storage.path | quote }}
           volumeMounts:
             - name: socket-dir
               mountPath: /csi

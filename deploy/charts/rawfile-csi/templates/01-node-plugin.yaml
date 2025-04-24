@@ -70,6 +70,8 @@ spec:
             - name: IMAGE_TAG
               value: "{{ .Values.node.image.tag }}"
           {{- end }}
+            - name: DATA_DIR_HOST_PATH
+              value: {{ .Values.node.storage.path | quote }}
             - name: NODE_ID
               valueFrom:
                 fieldRef:

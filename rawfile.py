@@ -16,9 +16,11 @@ from rawfile_util import migrate_all_volume_schemas, gc_all_volumes
 @click.group()
 @click.option("--image-repository", envvar="IMAGE_REPOSITORY")
 @click.option("--image-tag", envvar="IMAGE_TAG")
-def cli(image_repository, image_tag):
+@click.option("--data-dir-host-path", envvar="DATA_DIR_HOST_PATH")
+def cli(image_repository, image_tag, data_dir_host_path):
     CONFIG["image_repository"] = image_repository
     CONFIG["image_tag"] = image_tag
+    CONFIG["data_dir_host_path"] = data_dir_host_path or '/var/csi/rawfile'
 
 
 @cli.command()
