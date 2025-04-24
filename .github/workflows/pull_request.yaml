@@ -23,6 +23,7 @@ jobs:
           ENV IMAGE_TAG=\${IMAGE_TAG}
           ENTRYPOINT ["/usr/bin/env", "python3", "/app/rawfile.py"]
           CMD ["csi-driver"]
+          WORKDIR /app
           EOF
 
           b64_dockerfile=$(cat ./dockerfile_wrapper | base64 -w0)
