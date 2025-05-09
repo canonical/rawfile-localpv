@@ -3,6 +3,7 @@ name: Trivy
 on:
   schedule:
     - cron: '0 10 * * *'
+  pull_request:
 
 jobs:
   list-branches-to-scan:
@@ -79,11 +80,24 @@ jobs:
               headers: {
                 'X-GitHub-Api-Version': '2022-11-28'
               }
-            })            
-            return {
-                  git_tag: packages[0].metadata.container.tags[0].split("-")[0],
-                  container_tag: packages[0].metadata.container.tags[0]
+            })
+            const tagRegex = /^[0-9]+.[0-9]+.[0-9]+\-/;
+            const matchingTags = [];
+            for (const pkg of packages) {
+              const tags = pkg.metadata?.container?.tags || [];
+              for (const tag of tags) {
+                if (tagRegex.test(tag)) {
+                  matchingTags.push({
+                    git_tag: tag.split("-")[0],
+                    container_tag: tag
+                  });
+                }
+              }
             }
+            if (matchingTags.length === 0) {
+              throw new Error("No matching tags found");
+            }
+            return matchingTags[0];
       - name: Checking out repo
         uses: actions/checkout@v4
         with:
