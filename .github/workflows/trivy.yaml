@@ -84,7 +84,7 @@ jobs:
             const tagRegex = /^[0-9]+.[0-9]+.[0-9]+\-/;
             const matchingTags = [];
             for (const pkg of packages) {
-              const tags = pkg.metadata?.container?.tags || [];
+              const tags = pkg.metadata?.container?.tags ?? [];
               for (const tag of tags) {
                 if (tagRegex.test(tag)) {
                   matchingTags.push({
