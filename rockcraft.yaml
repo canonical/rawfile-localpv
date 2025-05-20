@@ -3,7 +3,7 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.1"
+version: "0.8.2"
 license: Apache-2.0
 
 base: bare
@@ -18,8 +18,8 @@ services:
     command: python3 /app/rawfile.py [ csi-driver ]
     startup: enabled
     environment:
-      PYTHONUNBUFFERED: '1'
-    working-dir: '/app'
+      PYTHONUNBUFFERED: "1"
+    working-dir: "/app"
 
 parts:
   btrfsutil:
@@ -65,4 +65,10 @@ parts:
       orchestrator: app/orchestrator
       protos: app/protos
       templates: app/templates
-      '*.py': app/
+      "*.py": app/
+    prime:
+      # exclude repo layer files from the final image
+      - "-.*/"
+      - "-__pycache__/"
+      - "-deploy/"
+      - "-tests/"
