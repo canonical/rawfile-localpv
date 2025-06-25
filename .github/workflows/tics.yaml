@@ -1,24 +1,27 @@
-name: Security and quality nightly scan
+name: TICS Analysis
 
 on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/tics.yaml
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 10 * * 0'
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   TICS:
     permissions:
       contents: read
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, amd64, tiobe, jammy]
 
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2
-        with:
-          egress-policy: audit
-
       - name: Checking out repo
         uses: actions/checkout@v4
 
@@ -42,17 +45,21 @@ jobs:
         with:
           go-version: "1.22"
 
-      - name: TICS scan
+      - name: Install staticcheck
         run: |
-          export TICSAUTHTOKEN=${{ secrets.TICSAUTHTOKEN }}
-
           set -x
 
           # We don't have any unit tests for this project, but TICS expects this folder to exist.
           mkdir -p cover
 
-          # Install the TICS and staticcheck
+          # Install staticcheck
           go install honnef.co/go/tools/cmd/staticcheck@v0.5.1
-          . <(curl --silent --show-error 'https://canonical.tiobe.com/tiobeweb/TICS/api/public/v1/fapi/installtics/Script?cfg=default&platform=linux&url=https://canonical.tiobe.com/tiobeweb/TICS/')
 
-          TICSQServer -project  ${{ github.event.repository.name }} -tmpdir /tmp/tics -branchdir "$GITHUB_WORKSPACE"
+      - name: Run TICS
+        uses: tiobe/tics-github-action@v3
+        with:
+          mode: qserver
+          project: ${{ github.event.repository.name }}
+          viewerUrl: https://canonical.tiobe.com/tiobeweb/TICS/api/cfg?name=GoProjects
+          ticsAuthToken: ${{ secrets.TICSAUTHTOKEN }}
+          installTics: true
