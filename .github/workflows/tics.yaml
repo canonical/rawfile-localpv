@@ -35,7 +35,7 @@ jobs:
           # pylint and flake8 are required by TICSQServer.
           pip install pylint flake8
 
-          sudo apt install libbtrfsutil-dev
+          sudo apt install -y libbtrfsutil-dev
           pip wheel -w wheels/ "https://github.com/kdave/btrfs-progs/archive/refs/tags/v6.3.2.tar.gz#egg=btrfsutil&subdirectory=libbtrfsutil/python"
           pip install wheels/*
           pip install -r requirements.txt
