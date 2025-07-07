@@ -4,7 +4,7 @@ defaults: &defaults
   image:
     repository: ghcr.io/canonical/rawfile-localpv
     tag: 0.8.2
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 1
