@@ -60,6 +60,10 @@ parts:
     after: [rawfile-deps]
     plugin: dump
     source: .
+    stage-snaps:
+      - core22/fips-updates/stable
+    stage:
+      - -bin
     organize:
       csi: app/csi/
       orchestrator: app/orchestrator
