@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-push-arch-specifics:
     name: Build Rocks and Push Arch Specific Images
-    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@KU-3687/ubuntu-pro-support
+    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@main
     with:
       owner: ${{ github.repository_owner }}
       trivy-image-config: "trivy.yaml"
@@ -22,7 +22,7 @@ jobs:
     secrets:
       UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
   run-tests:
-    uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@KU-3687/ubuntu-pro-support
+    uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
     needs: [build-and-push-arch-specifics]
     secrets: inherit
     with:
