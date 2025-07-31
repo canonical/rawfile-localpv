@@ -11,10 +11,35 @@ This document uses a set of abbreviations which are explained below:
 
 ## FIPS Compliance Status
 
-Python links to the system OpenSSL by default. On a FIPS host, this will automatically be FIPS compliant. The following requirements must be met:
+Python links to the system OpenSSL by default. On a FIPS-enabled host, algorithms that use the OpenSSL implementation will be FIPS compliant. However, Python contains builtin
+hashing algorithms that are not FIPS compliant (e.g. MD5). Building Python with `--wihout-builtin-hashlib-hashes` will remove these non-FIPS compliant algorithms.
+Rawfile LocalPV does not use any of these non-FIPS compliant algorithms, so it is FIPS compliant.
 
-1. **OpenSSL**: Must link against a FIPS-validated OpenSSL implementation, e.g. from `core22/fips`.
-2. **Build Environment**: Must be built on an Ubuntu Pro machine.
+In order to confirm Python is referencing the system OpenSSL, you can run the following command:
+
+```bash
+python3 -c 'import _ssl; print(_ssl.__file__)'
+```
+
+You will see something like `/usr/lib/python3.13/lib-dynload/_ssl.cpython-313-x86_64-linux-gnu.so`. Run `ldd` and look for `libssl.so` and `libcrypto.so`:
+
+```bash
+ldd /usr/lib/python3.13/lib-dynload/_ssl.cpython-313-x86_64-linux-gnu.so | grep -E 'libssl|libcrypto'
+```
+
+You should see something like:
+
+```
+libssl.so.3 => /lib/x86_64-linux-gnu/libssl.so.3 (0x000075b68a51f000)
+libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x000075b689e00000)
+```
+
+If that's not the case, you need to ensure the Python that's going to run this ROCK, 
+is either built with a FIPS-compliant OpenSSL, or is referencing the host's OpenSSL.
+
+### Future work
+
+* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
 
 ### Required Build Modifications
 
