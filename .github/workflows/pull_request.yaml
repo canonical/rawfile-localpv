@@ -17,6 +17,11 @@ jobs:
       cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
+      enabled-ubuntu-pro-features: "fips-updates"
+      multipass-image: "22.04"
+      rockcraft-revisions: '{"amd64": "3494"}'
+    secrets:
+      UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
   run-tests:
     uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@main
     needs: [build-and-push-arch-specifics]
