@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Run in dry-run mode (true/false)'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build-and-push-arch-specifics:
@@ -43,4 +49,4 @@ jobs:
     if: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas != '[]' }}
     with:
       rock-metas: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas }}
-      dry-run: ${{ github.event_name != 'push' }}
+      dry-run: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.dry-run) }}
