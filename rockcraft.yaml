@@ -37,6 +37,12 @@ parts:
       for wheel in $CRAFT_STAGE/wheels/*.whl; do
         echo $wheel >> $CRAFT_STAGE/wheels/wheels.txt
       done
+  # NOTE(Hue): Inspired from https://discourse.ubuntu.com/t/build-rocks-with-ubuntu-pro-services/57578
+  openssl:
+    plugin: nil
+    stage-packages:
+      - openssl-fips-module-3 # a Pro only FIPS package for openssl
+      - openssl # now automatically selected from fips-preview
   rawfile-deps:
     after: [btrfsutil]
     plugin: python
