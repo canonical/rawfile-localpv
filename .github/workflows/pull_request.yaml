@@ -24,8 +24,7 @@ jobs:
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["Ubuntu_ARM64_4C_16G_01"]}'
       enabled-ubuntu-pro-features: "fips-updates"
-      multipass-image: "22.04"
-      rockcraft-revisions: '{"amd64": "3494"}'
+      rockcraft-revisions: '{"amd64": "3494", "arm64": "3547"}'
     secrets:
       UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
   run-tests:
