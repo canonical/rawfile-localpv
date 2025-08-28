@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.storageClass.name }}
   annotations:
     storageclass.kubernetes.io/is-default-class: {{ .Values.storageClass.isDefault | quote }}
-provisioner: rawfile.csi.openebs.io
+provisioner: {{ .Values.provisionerName }}
 reclaimPolicy: {{ .Values.storageClass.reclaimPolicy }}
 volumeBindingMode: {{ .Values.storageClass.volumeBindingMode }}
 allowVolumeExpansion: true
