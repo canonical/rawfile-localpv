@@ -48,22 +48,25 @@ parts:
 ...
 ```
 
-### Future work
-
-* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
-
 ### Required Build Modifications
 
 To build Rawfile LocalPV in FIPS-compliant mode:
 
-1. **Prerequisites**:
-   - `rockcraft` version that contains the pro feature (see [this discourse post]).
+**Prerequisites**:
 
-2. **Build Command**:
+- a `rockcraft` version that allows building with Ubuntu Pro services (refer to [this discourse post]).
 
-   ```bash
-   sudo rockcraft pack --pro=fips-updates
-   ```
+**Building the Image**:
+
+Use the following command to build the image:
+
+```bash
+sudo rockcraft pack --pro=fips-updates
+```
+
+### Future work
+
+* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
 
 <!-- LINKS -->
 
