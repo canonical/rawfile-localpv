@@ -3,6 +3,7 @@
 The following document summarizes the current state of [FIPS 140-3] compliance for Rawfile LocalPV, focusing on its cryptographic components and build requirements. This overview is intended to guide users and developers in understanding the compliance status and necessary steps for achieving FIPS mode operation.
 
 > **Note:** As of now, pebble is not built in a FIPS-compliant way. This document will be updated once it is.
+
 ## Abbreviations
 
 This document uses a set of abbreviations which are explained below:
@@ -34,26 +35,38 @@ libssl.so.3 => /lib/x86_64-linux-gnu/libssl.so.3 (0x000075b68a51f000)
 libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x000075b689e00000)
 ```
 
-If that's not the case, you need to ensure the Python that's going to run this ROCK, 
-is either built with a FIPS-compliant OpenSSL, or is referencing the host's OpenSSL.
-
-### Future work
-
-* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
+**NOTE**: This ROCK is bundled with a FIPS-validated OpenSSL library which is 
+described in the ROCK manifest (see [this discourse post]).
+```yaml
+...
+parts:
+  openssl:
+    plugin: nil
+    stage-packages:
+      - openssl-fips-module-3
+      - openssl
+...
+```
 
 ### Required Build Modifications
 
 To build Rawfile LocalPV in FIPS-compliant mode:
 
-1. **Prerequisites**:
-   - Ubuntu Pro enabled machine
-   - rockcraft on `edge/pro-sources` channel, see [this discourse post]
+**Prerequisites**:
 
-2. **Build Command**:
+- a `rockcraft` version that allows building with Ubuntu Pro services (refer to [this discourse post]).
 
-   ```bash
-   sudo rockcraft pack --pro=fips-updates
-   ```
+**Building the Image**:
+
+Use the following command to build the image:
+
+```bash
+sudo rockcraft pack --pro=fips-updates
+```
+
+### Future work
+
+* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
 
 <!-- LINKS -->
 
