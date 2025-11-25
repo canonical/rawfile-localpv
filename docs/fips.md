@@ -13,9 +13,9 @@ This document uses a set of abbreviations which are explained below:
 ## FIPS Compliance Status
 
 Python by default links to the OpenSSL of the environment in which it's running (e.g. a ROCK). In a FIPS-enabled environment, 
-algorithms that use the OpenSSL implementation will be FIPS compliant. However, Python contains builtin
+algorithms that use the OpenSSL implementation will be FIPS compliant. However, Python contains built-in
 hashing algorithms that are not FIPS compliant (e.g. MD5). Building Python with `--wihout-builtin-hashlib-hashes` will remove these non-FIPS compliant algorithms.
-Rawfile LocalPV does not use any of these builtin and non-FIPS compliant algorithms, and the ROCK is shipped with a FIPS-compliant OpenSSL,
+Rawfile LocalPV does not use any of these built-in and non-FIPS compliant algorithms, and the ROCK is shipped with a FIPS-compliant OpenSSL,
 so it is FIPS-compliant.
 
 In order to confirm Python is referencing the host's OpenSSL, you can run the following command:
@@ -68,7 +68,7 @@ sudo rockcraft pack --pro=fips-updates
 
 ### Future work
 
-* Using a custom Python build without the builtin hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
+* Using a custom Python build without the built-in hashes, and possibly linked to a static FIPS-compliant OpenSSL. 
 
 <!-- LINKS -->
 
