@@ -22,7 +22,7 @@ munch==4.0.0
     # via -r requirements.in
 prometheus-client==0.21.1
     # via -r requirements.in
-protobuf==5.29.3
+protobuf==5.29.5
     # via grpcio-tools
 pykube-ng==23.6.0
     # via -r requirements.in

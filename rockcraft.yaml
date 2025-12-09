@@ -62,6 +62,10 @@ parts:
       - mount
       - coreutils
       - util-linux
+    override-stage: |-
+      apt update
+      apt upgrade -y
+      craftctl default
   rawfile:
     after: [rawfile-deps]
     plugin: dump
