@@ -8,5 +8,5 @@ metadata:
 provisioner: rawfile.csi.openebs.io
 reclaimPolicy: {{ .Values.storageClass.reclaimPolicy }}
 volumeBindingMode: {{ .Values.storageClass.volumeBindingMode }}
-allowVolumeExpansion: true
+allowVolumeExpansion: {{ .Values.storageClass.allowVolumeExpansion }}
 {{- end }}
