@@ -3,7 +3,7 @@ provisionerName: "rawfile.csi.openebs.io"
 defaults: &defaults
   image:
     repository: ghcr.io/canonical/rawfile-localpv
-    tag: 0.8.2
+    tag: 0.8.3
     pullPolicy: IfNotPresent
   resources:
     limits:

@@ -3,8 +3,22 @@
 name: rawfile-localpv
 summary: RawFilePV
 description: Kubernetes LocalPVs on Steroids
-version: "0.8.2"
+version: "0.8.3"
 license: Apache-2.0
+
+package-repositories:
+  - type: apt
+    formats: [deb-src]
+    components: [main restricted universe multiverse]
+    suites: [jammy, jammy-updates]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: https://archive.ubuntu.com/ubuntu
+  - type: apt
+    formats: [deb-src]
+    components: [main restricted universe multiverse]
+    suites: [jammy-security]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: https://security.ubuntu.com/ubuntu
 
 base: bare
 build-base: ubuntu@22.04
@@ -62,6 +76,12 @@ parts:
       - mount
       - coreutils
       - util-linux
+    override-stage: |-
+      set -e
+
+      apt update
+      apt upgrade -y
+      craftctl default
   rawfile:
     after: [rawfile-deps]
     plugin: dump
