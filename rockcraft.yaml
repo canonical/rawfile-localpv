@@ -10,9 +10,15 @@ package-repositories:
   - type: apt
     formats: [deb-src]
     components: [main restricted universe multiverse]
+    suites: [jammy, jammy-updates]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: https://archive.ubuntu.com/ubuntu
+  - type: apt
+    formats: [deb-src]
+    components: [main restricted universe multiverse]
     suites: [jammy-security]
     key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
-    url: http://security.ubuntu.com/ubuntu
+    url: https://security.ubuntu.com/ubuntu
 
 base: bare
 build-base: ubuntu@22.04
@@ -71,6 +77,8 @@ parts:
       - coreutils
       - util-linux
     override-stage: |-
+      set -e
+
       apt update
       apt upgrade -y
       craftctl default
