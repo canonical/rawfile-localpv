@@ -38,6 +38,7 @@ storageClass:
   isDefault: true
   reclaimPolicy: Delete
   volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: false
 
 imagePullSecrets: []
 serviceMonitor:
