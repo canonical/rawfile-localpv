@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   rawfile-csi:
   - apiVersion: v2
+    appVersion: 0.8.3
+    created: "2026-01-08T09:26:30.915380935Z"
+    description: RawFile Driver Container Storage Interface
+    digest: e1c419ebb910e00099c6f0c78763f4232bfa27d7b6fff735aff5d41b4187986d
+    name: rawfile-csi
+    type: application
+    urls:
+    - https://github.com/canonical/rawfile-localpv/releases/download/rawfile-csi-0.9.2/rawfile-csi-0.9.2.tgz
+    version: 0.9.2
+  - apiVersion: v2
     appVersion: 0.8.2
     created: "2025-07-08T08:00:24.305689602Z"
     description: RawFile Driver Container Storage Interface
@@ -51,4 +61,4 @@ entries:
     urls:
     - https://github.com/canonical/rawfile-localpv/releases/download/rawfile-csi-0.8.0/rawfile-csi-0.8.0.tgz
     version: 0.8.0
-generated: "2025-07-08T08:00:24.305711312Z"
+generated: "2026-01-08T09:26:30.915414377Z"
