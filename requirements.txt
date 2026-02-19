@@ -6,7 +6,7 @@
 #
 certifi==2024.12.14
     # via requests
-charset-normalizer==3.4.0
+charset-normalizer==3.4.4
     # via requests
 click==8.1.8
     # via -r requirements.in
@@ -22,7 +22,7 @@ munch==4.0.0
     # via -r requirements.in
 prometheus-client==0.21.1
     # via -r requirements.in
-protobuf==5.29.5
+protobuf==5.29.6
     # via grpcio-tools
 pykube-ng==23.6.0
     # via -r requirements.in
@@ -30,7 +30,7 @@ pyyaml==6.0.2
     # via
     #   -r requirements.in
     #   pykube-ng
-requests==2.32.3
+requests==2.32.5
     # via pykube-ng
 urllib3==2.2.3
     # via
