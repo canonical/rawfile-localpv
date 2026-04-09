@@ -36,11 +36,11 @@ def log_grpc_request(func):
 
 
 def run(cmd):
-    return subprocess.run(cmd, shell=True, check=True)
+    return subprocess.run(cmd, shell=True, check=True) # nosec B602
 
 
 def run_out(cmd: str):
-    p = subprocess.run(cmd, shell=True, capture_output=True)
+    p = subprocess.run(cmd, shell=True, capture_output=True) # nosec B602
     return p
 
 

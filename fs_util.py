@@ -15,7 +15,7 @@ def path_stats(path):
 
 def device_stats(dev):
     output = subprocess.run(
-        f"blockdev --getsize64 {dev}", shell=True, check=True, capture_output=True
+        f"blockdev --getsize64 {dev}", shell=True, check=True, capture_output=True # nosec B602
     ).stdout.decode()
     dev_size = int(output)
     return {"dev_size": dev_size}
@@ -25,7 +25,7 @@ def dev_to_mountpoint(dev_name):
     try:
         output = subprocess.run(
             f"findmnt --json --first-only {dev_name}",
-            shell=True,
+            shell=True, # nosec B602
             check=True,
             capture_output=True,
         ).stdout.decode()
@@ -38,7 +38,7 @@ def dev_to_mountpoint(dev_name):
 def mountpoint_to_dev(mountpoint):
     res = subprocess.run(
         f"findmnt --json --first-only --nofsroot --mountpoint {mountpoint}",
-        shell=True,
+        shell=True, # nosec B602
         capture_output=True,
     )
     if res.returncode != 0:

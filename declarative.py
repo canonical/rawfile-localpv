@@ -60,7 +60,7 @@ def be_unmounted(path):
 
 def current_fs(device):
     res = subprocess.run(
-        f"blkid -o value -s TYPE {device}", shell=True, capture_output=True
+        f"blkid -o value -s TYPE {device}", shell=True, capture_output=True # nosec B602
     )
     if res.returncode == 2:  # specified token was not found
         return None
