@@ -43,11 +43,11 @@ def be_mounted(dev, mountpoint):
 
     fs = current_fs(dev)
     if fs == "ext4":
-        run(f"mount -t ext4 {dev} {mountpoint}")
+        run(["mount", "-t", "ext4", str(dev), str(mountpoint)])
     elif fs == "btrfs":
-        run(f"mount -t btrfs -o flushoncommit {dev} {mountpoint}")
+        run(["mount", "-t", "btrfs", "-o", "flushoncommit", str(dev), str(mountpoint)])
     elif fs == "xfs":
-        run(f"mount -t xfs {dev} {mountpoint}")
+        run(["mount", "-t", "xfs", str(dev), str(mountpoint)])
     else:
         raise Exception(f"Unsupported fs type: {fs}")
 
@@ -55,12 +55,12 @@ def be_mounted(dev, mountpoint):
 def be_unmounted(path):
     path = Path(path)
     while path.is_mount():
-        run(f"umount {path}")
+        run(["umount", str(path)])
 
 
 def current_fs(device):
     res = subprocess.run(
-        f"blkid -o value -s TYPE {device}", shell=True, capture_output=True
+        ["blkid", "-o", "value", "-s", "TYPE", str(device)], capture_output=True
     )
     if res.returncode == 2:  # specified token was not found
         return None
@@ -70,11 +70,13 @@ def current_fs(device):
 def be_formatted(dev, fs):
     def init_fs(device):
         if fs == "ext4":
-            run(f"mkfs.ext4 -m 0 {device}")
+            run(["mkfs.ext4", "-m", "0", str(device)])
         elif fs == "btrfs":
-            run(f"mkfs.btrfs {device}")
+            run(["mkfs.btrfs", str(device)])
             tmp_mnt = tempfile.mkdtemp(prefix="mnt-")
             default_subvol = f"{tmp_mnt}/default"
+            # Multi-step btrfs setup requires a shell script; inputs are
+            # locally-generated tempdir paths, not user-controlled.
             run(
                 f"""
                 set -ex
@@ -87,7 +89,7 @@ def be_formatted(dev, fs):
                 """
             )
         elif fs == "xfs":
-            run(f"mkfs.xfs {device}")
+            run(["mkfs.xfs", str(device)])
         else:
             raise Exception(f"Unsupported fs type: {fs}")
 
@@ -105,10 +107,10 @@ def be_fs_expanded(dev, path):
     fs = current_fs(dev)
     path = Path(path).resolve()
     if fs == "ext4":
-        run(f"resize2fs {dev}")
+        run(["resize2fs", str(dev)])
     elif fs == "btrfs":
-        run(f"btrfs filesystem resize max {path}")
+        run(["btrfs", "filesystem", "resize", "max", str(path)])
     elif fs == "xfs":
-        run(f"xfs_growfs -d {path}")
+        run(["xfs_growfs", "-d", str(path)])
     else:
         raise Exception(f"Unsupported fsType: {fs}")

@@ -36,12 +36,13 @@ def log_grpc_request(func):
 
 
 def run(cmd):
-    return subprocess.run(cmd, shell=True, check=True)
+    if isinstance(cmd, str):
+        return subprocess.run(cmd, shell=True, check=True)
+    return subprocess.run(cmd, check=True)
 
 
-def run_out(cmd: str):
-    p = subprocess.run(cmd, shell=True, capture_output=True)
-    return p
+def run_out(cmd):
+    return subprocess.run(cmd, capture_output=True)
 
 
 class remote_fn(object):
