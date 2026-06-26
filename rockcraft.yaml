@@ -25,6 +25,8 @@ build-base: ubuntu@22.04
 platforms:
   amd64:
   arm64:
+  ppc64el:
+  s390x:
 
 services:
   rawfile:
@@ -61,8 +63,13 @@ parts:
     after: [btrfsutil]
     plugin: python
     source: .
+    build-packages:
+      - libssl-dev
     build-environment:
       - PIP_NO_CACHE_DIR: "1"
+      # grpcio's bundled BoringSSL does not recognize s390x or ppc64el.
+      # Link against Ubuntu's OpenSSL instead.
+      - GRPC_PYTHON_BUILD_SYSTEM_OPENSSL: "1"
     python-requirements:
       - $CRAFT_STAGE/wheels/wheels.txt
       - ./requirements.txt

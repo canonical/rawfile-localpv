@@ -11,10 +11,6 @@ charset-normalizer==3.4.4
 click==8.1.8
     # via -r requirements.in
 grpcio==1.70.0
-    # via
-    #   -r requirements.in
-    #   grpcio-tools
-grpcio-tools==1.70.0
     # via -r requirements.in
 idna==3.10
     # via requests
@@ -23,7 +19,7 @@ munch==4.0.0
 prometheus-client==0.21.1
     # via -r requirements.in
 protobuf==5.29.6
-    # via grpcio-tools
+    # via -r requirements.in
 pykube-ng==23.6.0
     # via -r requirements.in
 pyyaml==6.0.2
