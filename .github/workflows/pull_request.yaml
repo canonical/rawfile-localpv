@@ -15,7 +15,7 @@ on:
 jobs:
   build-and-push-arch-specifics:
     name: Build Rocks and Push Arch Specific Images
-    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@6b24c265636d618fb98d5f56231c5581a1b429ab # main
+    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@fix-lxd-guest-pro-attach
     with:
       owner: ${{ github.repository_owner }}
       trivy-image-config: "trivy.yaml"
@@ -24,7 +24,7 @@ jobs:
       arch-skipping-maximize-build-space: '["arm64"]'
       platform-labels: '{"arm64": ["self-hosted", "Linux", "ARM64", "jammy"]}'
       enabled-ubuntu-pro-features: "fips-updates"
-      rockcraft-revisions: '{"amd64": "3494", "arm64": "3547"}'
+      force-build: true
     secrets:
       UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
   run-tests:

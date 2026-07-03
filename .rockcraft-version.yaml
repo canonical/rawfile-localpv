@@ -1,0 +1,5 @@
+versions:
+  - architecture: amd64
+    channel: latest/edge
+  - architecture: arm64
+    channel: latest/edge
