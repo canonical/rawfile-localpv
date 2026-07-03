@@ -22,7 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@1f72669125e711d252c472f45ad98f22ff592d28 # main
+    uses: canonical/k8s-workflows/.github/workflows/build_rocks.yaml@1f72669125e711d252c472f45ad98f22ff592d28
     with:
       owner: ${{ github.repository_owner }}
       trivy-image-config: "trivy.yaml"
@@ -34,7 +34,7 @@ jobs:
     secrets:
       UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
   run-tests:
-    uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@1f72669125e711d252c472f45ad98f22ff592d28 # main
+    uses: canonical/k8s-workflows/.github/workflows/run_tests.yaml@1f72669125e711d252c472f45ad98f22ff592d28
     needs: [build-and-push-arch-specifics]
     secrets: inherit
     with:
@@ -43,7 +43,7 @@ jobs:
     permissions:
       security-events: write
       packages: read
-    uses: canonical/k8s-workflows/.github/workflows/scan_images.yaml@1f72669125e711d252c472f45ad98f22ff592d28 # main
+    uses: canonical/k8s-workflows/.github/workflows/scan_images.yaml@1f72669125e711d252c472f45ad98f22ff592d28
     needs: [build-and-push-arch-specifics]
     secrets: inherit
     with:
@@ -52,7 +52,7 @@ jobs:
       trivy-image-config: ./trivy.yaml
   build-and-push-multiarch-manifest:
     name: Combine Rocks and Push Multiarch Manifest
-    uses: canonical/k8s-workflows/.github/workflows/assemble_multiarch_image.yaml@1f72669125e711d252c472f45ad98f22ff592d28 # main
+    uses: canonical/k8s-workflows/.github/workflows/assemble_multiarch_image.yaml@1f72669125e711d252c472f45ad98f22ff592d28
     needs: [build-and-push-arch-specifics]
     if: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas != '[]' }}
     with:
