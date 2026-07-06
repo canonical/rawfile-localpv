@@ -52,6 +52,9 @@ jobs:
       trivy-image-config: ./trivy.yaml
   build-and-push-multiarch-manifest:
     name: Combine Rocks and Push Multiarch Manifest
+    permissions:
+      contents: read
+      packages: write
     uses: canonical/k8s-workflows/.github/workflows/assemble_multiarch_image.yaml@1f72669125e711d252c472f45ad98f22ff592d28
     needs: [build-and-push-arch-specifics]
     if: ${{ needs.build-and-push-arch-specifics.outputs.changed-rock-metas != '[]' }}
