@@ -98,11 +98,11 @@ def mount_root_subvol(volume_id):
     img_file = rawfile_util.img_file(volume_id)
     loop_dev = rawfile_util.attach_loop(img_file)
 
-    run(f"mount -t btrfs -o subvolid=0 {loop_dev} {root_subvol}")
+    run(["mount", "-t", "btrfs", "-o", "subvolid=0", str(loop_dev), root_subvol])
     try:
         yield root_subvol
     finally:
-        run(f"umount {root_subvol}")
+        run(["umount", root_subvol])
         pathlib.Path(root_subvol).rmdir()
 
 

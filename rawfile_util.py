@@ -101,11 +101,11 @@ def truncate(img_file, size):
     Set the umask to restrict permissions to the owner only
     """
     with _owner_umask():
-        run(f"truncate -s {size} {img_file}")
+        run(["truncate", "-s", str(size), str(img_file)])
 
 
 def attached_loops(file: str) -> list[str]:
-    out = run_out(f"losetup -j {file}").stdout.decode()
+    out = run_out(["losetup", "-j", str(file)]).stdout.decode()
     lines = out.splitlines()
     devs = [line.split(":", 1)[0] for line in lines]
     return devs
@@ -113,11 +113,11 @@ def attached_loops(file: str) -> list[str]:
 
 def attach_loop(file) -> str:
     def next_loop():
-        loop_file = run_out(f"losetup -f").stdout.decode().strip()
+        loop_file = run_out(["losetup", "-f"]).stdout.decode().strip()
         if not Path(loop_file).exists():
             pfx_len = len("/dev/loop")
             loop_dev_id = loop_file[pfx_len:]
-            run(f"mknod {loop_file} b 7 {loop_dev_id}")
+            run(["mknod", loop_file, "b", "7", loop_dev_id])
         return loop_file
 
     while True:
@@ -125,13 +125,13 @@ def attach_loop(file) -> str:
         if len(devs) > 0:
             return devs[0]
         next_loop()
-        run(f"losetup --direct-io=on -f {file}")
+        run(["losetup", "--direct-io=on", "-f", str(file)])
 
 
 def detach_loops(file) -> None:
     devs = attached_loops(file)
     for dev in devs:
-        run(f"losetup -d {dev}")
+        run(["losetup", "-d", dev])
 
 
 def list_all_volumes():
