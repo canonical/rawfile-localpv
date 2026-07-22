@@ -29,7 +29,7 @@ jobs:
       multiarch-awareness: true
       cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
       arch-skipping-maximize-build-space: '["arm64"]'
-      platform-labels: '{"arm64": ["self-hosted", "Linux", "ARM64", "jammy"]}'
+      platform-labels: '{"arm64": ["self-hosted", "Linux", "ARM64", "jammy"], "s390x": ["self-hosted-linux-s390x-noble-medium"], "ppc64el": ["self-hosted-linux-ppc64el-noble-edge"]}'
       enabled-ubuntu-pro-features: "fips-updates"
     secrets:
       UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}

@@ -3,3 +3,7 @@ versions:
     channel: latest/edge
   - architecture: arm64
     channel: latest/edge
+  - architecture: ppc64el
+    channel: latest/edge
+  - architecture: s390x
+    channel: latest/edge
