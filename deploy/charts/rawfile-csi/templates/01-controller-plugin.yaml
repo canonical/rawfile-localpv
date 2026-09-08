@@ -29,14 +29,15 @@ spec:
     spec:
       serviceAccount: {{ include "rawfile-csi.fullname" . }}-driver
       priorityClassName: system-cluster-critical
+      # The control-plane taints carry no value, so Equal/"true" never matches
+      # them and the controller stays Pending on a cluster whose only ready
+      # nodes are tainted control-plane nodes.
       tolerations:
         - key: "node-role.kubernetes.io/master"
-          operator: Equal
-          value: "true"
+          operator: Exists
           effect: NoSchedule
         - key: "node-role.kubernetes.io/control-plane"
-          operator: Equal
-          value: "true"
+          operator: Exists
           effect: NoSchedule
       volumes:
         - name: socket-dir
